@@ -10,6 +10,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 	
+	
 	this.state = {
 		events: [
 		{id:1, time: "10:00", title: "Breakfast with Simon", location: "Lounge Caffe", description: "Discuss Q3 targets"},
@@ -19,6 +20,12 @@ class App extends React.Component {
 		]
 	};
 	}
+	
+	handleDelete = eventId => {
+		const events = this.state.events.filter(e => e.id !== eventId);
+		this.setState({events });
+	};
+	
 	render() {
     return (
       <React.Fragment>
@@ -35,6 +42,7 @@ class App extends React.Component {
                     title={event.title}
                     location={event.location}
                     description={event.description}
+					onDelete = {this.handleDelete}
                   />
                 ))}
               </div>
@@ -88,7 +96,7 @@ class Event extends React.Component {
             {this.props.time}
           </h3>
           <div className="media-body mb-3 mb-lg-3">
-            <MDBBadge color="danger" className="ml-2 float-right">
+            <MDBBadge color="danger" className="ml-2 float-right" onClick={() => this.props.onDelete(this.props.id)}>
               -
             </MDBBadge>
             <h6 className="mt-0 font-weight-bold">{this.props.title} </h6>{" "}
